@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+.card {
+    margin: 10px
+}
+
+.silent-notify {
+  color: red;
+  text-align: right;
+}
+
+.Cust_Widget {
+  margin: 10px;
+}

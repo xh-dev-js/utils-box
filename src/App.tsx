@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import UrlEncoder from "./components/UrlEncoder";
+import UrlDecoder from "./components/UrlDecoder";
+import UrlProcessor from "./components/UrlProcessor";
+import Base64Encoder from "./components/Base64Encoder";
+import Base64Decoder from "./components/Base64Decoder";
+import Md5Hash from "./components/Md5Hash";
+import Sha256Hash from "./components/Sha256Hash";
+import Sha1Hash from "./components/Sha1Hash";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    fetch("https://asia-east2-ultra-acre-276608.cloudfunctions.net/ipChecker")
+        .then(text=>console.log(text))
+        .catch(e=>console.log(e))
+
+    return (
+        <div className="App container">
+            {/*<YouTubeUrlExtractor/>*/}
+            <Base64Decoder/>
+            <Base64Encoder/>
+            <Md5Hash/>
+            <Sha256Hash/>
+            <Sha1Hash/>
+            <UrlProcessor/>
+            <UrlEncoder/>
+            <UrlDecoder/>
+        </div>
+    );
 }
 
 export default App;
