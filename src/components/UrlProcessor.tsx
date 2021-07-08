@@ -1,7 +1,6 @@
 import React from "react";
 import {InputRowModule} from "../bootstrap/InputRow";
 import {TextAreaModule} from "../bootstrap/TextArea";
-import {StringUtils} from "pyyqww_t1/dist";
 
 
 const {useState} = React
@@ -16,7 +15,6 @@ const UrlProcessor = () => {
     const [search, setSearch] = useState('')
     const [hash, setHash] = useState('')
     const [host, setHost] = useState('')
-    const componentName = "URL Processor"
 
     const checkIsUrl = (str: string) => {
         var pattern = new RegExp('^((http?:\\/\\/)?|(https?:\\/\\/)?)' + // protocol
@@ -55,25 +53,20 @@ const UrlProcessor = () => {
     }
 
     return (
-        <div className={StringUtils.nameStyleDelimiter(componentName)}>
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title">{componentName}</h5>
-                    {/*<textarea className={'form-control'} value={inputUrl} onChange={e => process(e.target.value)}/>*/}
-                    <TextAreaModule.TextArea value={inputUrl} updateCallback={text => process(text)}
-                                             doubleClickToPaste={true}/>
-                    <InputRowModule.InputRow title='Has Error?' value={hasError}/>
-                    <InputRowModule.InputRow title='Protocol' value={protocol}/>
-                    <InputRowModule.InputRow title='Hostname' value={hostname}/>
-                    <InputRowModule.InputRow title='Port' value={port}/>
-                    <InputRowModule.InputRow title='Pathname' value={pathname}/>
-                    <InputRowModule.InputRow title='Search' value={search}/>
-                    <InputRowModule.InputRow title='Hash' value={hash}/>
-                    <InputRowModule.InputRow title='Host' value={host}/>
-                    <InputRowModule.InputRow title='Server Url' value={`${protocol}${protocol==="" || host=== "" ? "" : "//"}${host}`}/>
-                </div>
-            </div>
-        </div>
+        <>
+            <TextAreaModule.TextArea value={inputUrl} updateCallback={text => process(text)}
+                                     doubleClickToPaste={true}/>
+            <InputRowModule.InputRow title='Has Error?' value={hasError}/>
+            <InputRowModule.InputRow title='Protocol' value={protocol}/>
+            <InputRowModule.InputRow title='Hostname' value={hostname}/>
+            <InputRowModule.InputRow title='Port' value={port}/>
+            <InputRowModule.InputRow title='Pathname' value={pathname}/>
+            <InputRowModule.InputRow title='Search' value={search}/>
+            <InputRowModule.InputRow title='Hash' value={hash}/>
+            <InputRowModule.InputRow title='Host' value={host}/>
+            <InputRowModule.InputRow title='Server Url'
+                                     value={`${protocol}${protocol === "" || host === "" ? "" : "//"}${host}`}/>
+        </>
     )
 }
 

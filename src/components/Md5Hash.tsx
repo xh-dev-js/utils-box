@@ -2,13 +2,12 @@ import React, {DragEvent as ReactDragEvent} from "react";
 import {TextAreaModule} from "../bootstrap/TextArea";
 import {InputRowModule} from "../bootstrap/InputRow";
 import CryptoJS from "crypto-js";
-import {ByteUtils, StringUtils} from "pyyqww_t1/dist";
+import {ByteUtils} from "pyyqww_t1/dist";
 import {DragDropUtils} from "../helper/DragDropUtils";
 
 const {useState} = React
 
 const Md5Hash = () => {
-    // const [useDecodeUri, setUseDecodeUri] = useState(true)
     const [inputValue, setInputValue] = useState('')
     const [resultB64Value, setResultB64Value] = useState('')
     const [resultHexValue, setResultHexValue] = useState('')
@@ -24,8 +23,6 @@ const Md5Hash = () => {
             setResultHexValue("Error")
         }
     }
-
-    let componentName = "MD5 Hasher"
 
     const dropFile = (ev: ReactDragEvent) => {
         ev.preventDefault()
@@ -46,20 +43,15 @@ const Md5Hash = () => {
     }
 
     return (
-        <div className={StringUtils.nameStyleDelimiter(componentName)}>
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title">{componentName}</h5>
-                    <TextAreaModule.TextArea value={inputValue} updateCallback={text => hashing(text)}
-                                             droppable={true}
-                                             doubleClickToPaste={true}
-                                             onDropCallback={ev => dropFile(ev)}
-                    />
-                    <InputRowModule.InputRow title={'Base64'} value={resultB64Value}/>
-                    <InputRowModule.InputRow title={'Hex'} value={resultHexValue}/>
-                </div>
-            </div>
-        </div>
+        <>
+            <TextAreaModule.TextArea value={inputValue} updateCallback={text => hashing(text)}
+                                     droppable={true}
+                                     doubleClickToPaste={true}
+                                     onDropCallback={ev => dropFile(ev)}
+            />
+            <InputRowModule.InputRow title={'Base64'} value={resultB64Value}/>
+            <InputRowModule.InputRow title={'Hex'} value={resultHexValue}/>
+        </>
     )
 }
 

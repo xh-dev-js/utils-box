@@ -36,15 +36,31 @@
     transform: rotate(360deg);
   }
 }
+
 .card {
-    margin: 10px
+  margin: 10px
 }
 
-.silent-notify {
-  color: red;
-  text-align: right;
+textarea {
+  margin: 2px;
 }
 
-.Cust_Widget {
+.nav {
+  background: #4a1894;
+}
+
+.topText {
+  color: white;
+}
+
+.topBar {
+  width: 100%;
+}
+
+.topBar-item {
   margin: 10px;
+}
+
+.float-right {
+  float: right;
 }

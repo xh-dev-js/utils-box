@@ -3,8 +3,7 @@ import {TextAreaModule} from "../bootstrap/TextArea";
 import {InputRowModule} from "../bootstrap/InputRow";
 import CryptoJS from "crypto-js";
 import {DragDropUtils} from "../helper/DragDropUtils";
-import {StringUtils, ByteUtils} from "pyyqww_t1/dist";
-
+import {ByteUtils} from "pyyqww_t1/dist";
 
 const {useState} = React
 
@@ -13,25 +12,22 @@ const Sha1Hash = () => {
     const [resultB64Value, setResultB64Value] = useState('')
     const [resultHexValue, setResultHexValue] = useState('')
 
-    let hashing = (str:string) =>{
+    let hashing = (str: string) => {
         setInputValue(str);
-        try{
+        try {
             const hash = CryptoJS.SHA1(str)
             setResultB64Value(CryptoJS.enc.Base64.stringify(hash))
             setResultHexValue(CryptoJS.enc.Hex.stringify(hash))
-        }
-        catch (e) {
+        } catch (e) {
             setResultB64Value("Error")
             setResultHexValue("Error")
         }
     }
 
-    let componentName = "Sha1 Hasher"
-
-    const dropFile = (ev: ReactDragEvent)=>{
+    const dropFile = (ev: ReactDragEvent) => {
         ev.preventDefault()
         const file = DragDropUtils.extractFileFromDragEvent(ev)
-        if(file !== null){
+        if (file !== null) {
             file.arrayBuffer()
                 .then(bf => {
                     const wordArray = ByteUtils.loadWordArrayFromArrayBuffer(bf)
@@ -39,7 +35,7 @@ const Sha1Hash = () => {
                     setResultB64Value(CryptoJS.enc.Base64.stringify(md5))
                     setResultHexValue(CryptoJS.enc.Hex.stringify(md5))
                 })
-                .catch(e=>{
+                .catch(e => {
                     setResultB64Value("Error handling drop file")
                     setResultHexValue("Error handling drop file")
                 })
@@ -47,20 +43,15 @@ const Sha1Hash = () => {
     }
 
     return (
-        <div className={StringUtils.nameStyleDelimiter(componentName)}>
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title">{componentName}</h5>
-                    <TextAreaModule.TextArea value={inputValue} updateCallback={text=>hashing(text)}
-                                             doubleClickToPaste={true}
-                                             droppable={true}
-                                             onDropCallback={ev=>dropFile(ev)}
-                    />
-                    <InputRowModule.InputRow title={'Base64'} value={resultB64Value}/>
-                    <InputRowModule.InputRow title={'Hex'} value={resultHexValue}/>
-                </div>
-            </div>
-        </div>
+        <>
+            <TextAreaModule.TextArea value={inputValue} updateCallback={text => hashing(text)}
+                                     doubleClickToPaste={true}
+                                     droppable={true}
+                                     onDropCallback={ev => dropFile(ev)}
+            />
+            <InputRowModule.InputRow title={'Base64'} value={resultB64Value}/>
+            <InputRowModule.InputRow title={'Hex'} value={resultHexValue}/>
+        </>
     )
 }
 

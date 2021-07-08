@@ -3,7 +3,7 @@ import {TextAreaModule} from "../bootstrap/TextArea";
 import {InputRowModule} from "../bootstrap/InputRow";
 import CryptoJS from "crypto-js";
 import {DragDropUtils} from "../helper/DragDropUtils";
-import {StringUtils, ByteUtils} from "pyyqww_t1/dist";
+import {ByteUtils} from "pyyqww_t1/dist";
 
 const {useState} = React
 
@@ -45,20 +45,15 @@ const Sha256Hash = () => {
     }
 
     return (
-        <div className={StringUtils.nameStyleDelimiter(componentName)}>
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title">{componentName}</h5>
-                    <TextAreaModule.TextArea value={inputValue} updateCallback={text => hashing(text)}
-                                             droppable={true}
-                                             doubleClickToPaste={true}
-                                             onDropCallback={ev => dropFile(ev)}
-                    />
-                    <InputRowModule.InputRow title={'Base64'} value={resultB64Value}/>
-                    <InputRowModule.InputRow title={'Hex'} value={resultHexValue}/>
-                </div>
-            </div>
-        </div>
+        <>
+            <TextAreaModule.TextArea value={inputValue} updateCallback={text => hashing(text)}
+                                     droppable={true}
+                                     doubleClickToPaste={true}
+                                     onDropCallback={ev => dropFile(ev)}
+            />
+            <InputRowModule.InputRow title={'Base64'} value={resultB64Value}/>
+            <InputRowModule.InputRow title={'Hex'} value={resultHexValue}/>
+        </>
     )
 }
 

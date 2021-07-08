@@ -38,49 +38,49 @@ export module TextAreaModule {
         }
 
         const onDragEnter = () => {
-            setTempValue(props.value)
-            update("Drop here")
+            if (props.droppable) {
+                setTempValue(props.value)
+                update("Drop here")
+            }
         }
 
         const onDragLeave = () => {
-            update(tempValue)
+            if (props.droppable)
+                update(tempValue)
+        }
+
+        const title = (() => {
+            let msg = ""
+            msg += (props.doubleClickToPaste ? "double click to paste" : '')
+            msg += (props.doubleClickToCopy ? "\ndouble click to copy" : '')
+            msg += (props.droppable ? "\nallow dropping file here" : '')
+            return msg
+        })()
+
+        const onDoubleClick = () => {
+            if (props.doubleClickToPaste) {
+                pasteFromClipboard()
+            } else if (props.doubleClickToCopy) {
+                ClipboardUtils.copy(props.value)
+            }
         }
 
         return (
             <>
                 <textarea
                     className={'form-control'} value={props.value} onChange={e => update(e.target.value)}
-                    onDoubleClick={
-                        () => {
-                            if (props.doubleClickToPaste) {
-                                pasteFromClipboard()
-                            } else if (props.doubleClickToCopy) {
-                                ClipboardUtils.copy(props.value)
-                            }
-                        }
-                    }
+                    onDoubleClick={() => onDoubleClick()}
                     onDrop={ev => {
                         props.onDropCallback(ev)
                         const file = DragDropUtils.extractFileFromDragEvent(ev)
-                        update("Dropped file: "+file?.name)
+                        update("Dropped file: " + file?.name)
                     }}
-                    onDragEnter={ev => {
-                        if (props.droppable)
-                            onDragEnter()
-                    }}
-                    onDragLeave={ev => {
-
-                        if (props.droppable)
-                            onDragLeave()
-                    }}
+                    onDragEnter={() => onDragEnter()}
+                    onDragLeave={() => onDragLeave()}
 
                     rows={props.rows}
+                    title={title}
                 />
-                <div className={'silent-notify row'}>
-                    {props.doubleClickToPaste ? <div className={'col-12'}><small>*double click to paste</small></div> : ''}
-                    {props.doubleClickToCopy ? <div className={'col-12'}><small>*double click to copy</small></div> : ''}
-                    {props.droppable ? <div className={'col-12'}><small>*allow dropping file here</small></div> : ''}
-                </div>
             </>
         )
     }
