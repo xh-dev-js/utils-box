@@ -6,7 +6,10 @@ import {TextAreaModule} from "../bootstrap/TextArea";
 const {useState} = React
 
 const UrlEncoder = () => {
-    const [useDecodeUri, setUseDecodeUri] = useState(true)
+    enum CheckedState {
+        encodeUri, encodeUriComponent
+    }
+    const [useDecodeUri, setUseDecodeUri] = useState(CheckedState.encodeUri)
     const [inputValue, setInputValue] = useState('')
     const [decodedValue, setDecodedValue] = useState('')
 
@@ -28,10 +31,10 @@ const UrlEncoder = () => {
 
     return (
         <>
-            <CheckBoxModule.CheckBox title="decodeURI" generalName="decode_uri_radio" checked={useDecodeUri}
-                                     setChecked={(_) => setUseDecodeUri(true)}/>
+            <CheckBoxModule.CheckBox title="decodeURI" generalName="decode_uri_radio" checked={useDecodeUri} checkedIf={CheckedState.encodeUri}
+                                     setChecked={(checkIf) => setUseDecodeUri(checkIf)}/>
             <CheckBoxModule.CheckBox title="decodeURIComponent" generalName="decode_uri_component_radio"
-                                     checked={!useDecodeUri} setChecked={(_) => setUseDecodeUri(false)}/>
+                                     checked={useDecodeUri} checkedIf={CheckedState.encodeUriComponent} setChecked={(checkIf) => setUseDecodeUri(checkIf)}/>
             <TextAreaModule.TextArea value={inputValue} updateCallback={text => decoding(text)}
                                      doubleClickToPaste={true}/>
             <TextAreaModule.TextArea value={decodedValue} updateCallback={text => {

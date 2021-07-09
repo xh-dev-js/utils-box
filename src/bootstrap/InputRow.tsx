@@ -20,6 +20,7 @@ export module InputRowModule {
             <>
                 <div className="mb-3 row"
                      onDoubleClick={() => ClipboardUtils.copy(String(props.value))}
+                     title={'Double click to copy'}
                 >
                     <label htmlFor={pair.id()} className="col-sm-2 col-form-label">{props.title}</label>
                     <div className="col-sm-10">

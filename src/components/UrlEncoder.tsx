@@ -7,7 +7,10 @@ const {useState} = React
 const {useEffect} = React
 
 const UrlEncoder = () => {
-    const [useEncodeUri, setUseEncodeUri] = useState(true)
+    enum CheckedState {
+        encodeUri, encodeUriComponent
+    }
+    const [useEncodeUri, setUseEncodeUri] = useState(CheckedState.encodeUri)
     const [inputValue, setInputValue] = useState('')
     const [encodedValue, setEncodedValue] = useState('')
 
@@ -30,9 +33,9 @@ const UrlEncoder = () => {
     return (
         <>
             <CheckBoxModule.CheckBox title="encodeURI" generalName="encode_uri_radio" checked={useEncodeUri}
-                                     setChecked={(_) => setUseEncodeUri(true)}/>
+                                     checkedIf={CheckedState.encodeUri} setChecked={(checkIf) => setUseEncodeUri(checkIf)}/>
             <CheckBoxModule.CheckBox title="encodeURIComponent" generalName="encode_uri_component_radio"
-                                     checked={!useEncodeUri} setChecked={(_) => setUseEncodeUri(false)}/>
+                                     checked={useEncodeUri} checkedIf={CheckedState.encodeUriComponent} setChecked={(checkIf) => setUseEncodeUri(checkIf)}/>
             <TextAreaModule.TextArea value={inputValue} updateCallback={text => encoding(text)}
                                      doubleClickToPaste={true}/>
             <TextAreaModule.TextArea value={encodedValue} updateCallback={text => encoding(text)}

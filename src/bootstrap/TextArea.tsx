@@ -94,5 +94,6 @@ export module TextAreaModule {
         },
         droppable: false,
         rows: 1,
+        updateCallback: (text:string)=>{}
     }
 }

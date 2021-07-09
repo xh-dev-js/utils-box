@@ -15,7 +15,7 @@ while (i < 10){
     print i;
     i++;
 }
-//WoW`
+`
 //     export const code =
 //         `/*
 // Wescript
@@ -38,7 +38,15 @@ while (i < 10){
     export enum Token{
         EMPTY,
         EOS_TOKEN, COLON_TOKEN, SEMICOLON_TOKEN, LEFT_PARENT_TOKEN, RIGHT_PARENT_TOKEN,
-        LEFT_BRACE_TOKEN, RIGHT_BRACE_TOKEN,MOD_TOKEN
+        LEFT_BRACE_TOKEN, RIGHT_BRACE_TOKEN,MOD_TOKEN, VAR_TOKEN, INT_TOKEN,
+        BOOL_TOKEN, IF_TOKEN, ELSE_TOKEN, WHILE_TOKEN, PRINT_TOKEN, IDENTIFIER_TOKEN,
+
+        PLUS_TOKEN, PLUSPLUS_TOEKN, PLUSPLUSASSIGN_TOKEN
+    }
+
+    export interface TokenValue {
+        type: Token
+        value: string
     }
 
     export const tokenMap:Map<Token, String> = new Map([
@@ -51,6 +59,15 @@ while (i < 10){
         [Token.LEFT_BRACE_TOKEN,"{"],
         [Token.RIGHT_BRACE_TOKEN,"}"],
         [Token.MOD_TOKEN,"%"],
+
+        [Token.VAR_TOKEN,"var"],
+        [Token.INT_TOKEN,"int"],
+        [Token.BOOL_TOKEN,"bool"],
+        [Token.IF_TOKEN,"if"],
+        [Token.ELSE_TOKEN,"else"],
+        [Token.WHILE_TOKEN,"while"],
+        [Token.PRINT_TOKEN,"print"],
+        [Token.IDENTIFIER_TOKEN,"id"],
     ])
 
     export class Reader {
@@ -89,7 +106,7 @@ while (i < 10){
     }
 
     export enum State {
-        INIT, START
+        INIT, START, IDENTIFIER
     }
 
     export class Scanner {
@@ -103,34 +120,68 @@ while (i < 10){
             this.state = State.START
         }
 
-        nextToken(): Token {
+        isWord = (c: string)=>(c >= "a" && c <= "z") || (c >= "A" && c <= "Z")
+        nextToken(): TokenValue {
+            let c
+            let bufferStr: string =""
             while (true) {
                 switch (this.state) {
                     case CompilerModule.State.START:
-                        const c = this.reader.nextChar()
-                        switch (c) {
-                            case ":":
-                                return Token.COLON_TOKEN
-                            case ";":
-                                return Token.SEMICOLON_TOKEN
-                            case "(":
-                                return Token.LEFT_PARENT_TOKEN
-                            case ")":
-                                return Token.RIGHT_PARENT_TOKEN
-                            case "{":
-                                return Token.LEFT_BRACE_TOKEN
-                            case "}":
-                                return Token.RIGHT_BRACE_TOKEN
-                            case "%":
-                                return Token.MOD_TOKEN
-                            case "":
-                                return Token.EOS_TOKEN
-                            case "\r":
-                            case "\n":
-                                this.currentLine++
-                                break;
-                            default:
-
+                        c = this.reader.nextChar()
+                        if( this.isWord(c) ){
+                            this.state = State.IDENTIFIER
+                            bufferStr = c
+                        }
+                        else{
+                            switch (c) {
+                                case ":":
+                                    return {type: Token.COLON_TOKEN, value: c}
+                                case ";":
+                                    return {type: Token.SEMICOLON_TOKEN, value: c}
+                                case "(":
+                                    return {type: Token.LEFT_PARENT_TOKEN, value: c}
+                                case ")":
+                                    return {type: Token.RIGHT_PARENT_TOKEN, value: c}
+                                case "{":
+                                    return {type: Token.LEFT_BRACE_TOKEN, value: c}
+                                case "}":
+                                    return {type: Token.RIGHT_BRACE_TOKEN, value: c}
+                                case "%":
+                                    return {type: Token.MOD_TOKEN, value: c}
+                                case "":
+                                    return {type: Token.EOS_TOKEN, value: c}
+                                case "\r":
+                                case "\n":
+                                    this.currentLine++
+                                    break;
+                                default:
+                            }
+                        }
+                        break;
+                    case CompilerModule.State.IDENTIFIER:
+                        c = this.reader.nextChar()
+                        if( this.isWord(c)){
+                            bufferStr+=c
+                        } else{
+                            this.reader.retractOne()
+                            this.state = State.START
+                            switch (bufferStr){
+                                case "var":
+                                    return {type: Token.VAR_TOKEN, value: bufferStr}
+                                case "true":
+                                case "false":
+                                    return {type: Token.BOOL_TOKEN, value: bufferStr}
+                                case "if":
+                                    return {type: Token.IF_TOKEN, value: bufferStr}
+                                case "else":
+                                    return {type: Token.ELSE_TOKEN, value: bufferStr}
+                                case "while":
+                                    return {type: Token.WHILE_TOKEN, value: bufferStr}
+                                case "print":
+                                    return {type: Token.PRINT_TOKEN, value: bufferStr}
+                                default:
+                                    return {type: Token.IDENTIFIER_TOKEN, value: bufferStr}
+                            }
                         }
                         break;
                 }

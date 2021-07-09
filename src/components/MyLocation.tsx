@@ -91,6 +91,7 @@ export const MyLocation = () => {
         setLocationLan(position.coords.latitude)
         setLocationLong(position.coords.longitude)
         setLabel(`${position.coords.latitude.toFixed(2)}, ${position.coords.longitude.toFixed(2)}`)
+
     }
 
     function getLocation() {
@@ -116,54 +117,13 @@ export const MyLocation = () => {
                     setTemp(finalJson.main.temp.toFixed(2))
                     setHumidity(finalJson.main.humidity.toFixed(2))
                     setWeather(finalJson.weather !== undefined && finalJson.weather !== null && finalJson.weather.length > 0 ? finalJson.weather[0].main : "N/A")
-                    setLocation(finalJson.sys.country)
+                    setLocation(finalJson.name)
                 }
             }).catch(e => console.log(e))
         }
     }, [label])
 
 
-    const temps: TemperaturePropType[] = [{lan: 22.265382470091375, long: 113.99513011009766}]
-
-    interface TemperaturePropType {
-        lan: number
-        long: number
-    }
-
-    const Temperature = (props: TemperaturePropType) => {
-        const [lan, setLan] = useState(props.lan)
-        const [long, setLong] = useState(props.long)
-        const [name, setName] = useState('N/A')
-        const [temp, setTemp] = useState('N/A')
-        const [updateTime, setUpdateTime] = useState('N/A')
-
-        const updateLocalizedTemperature = () => {
-            getWeather(lan, long)
-                .then(result => {
-                    if(result){
-                        setName(result.name)
-                        setTemp(result.main.temp.toFixed(2))
-                        setUpdateTime((new Date(result.dt*1000).toLocaleString()))
-                    }
-                })
-                .catch(e => console.log(e))
-        }
-        useEffect(() => {
-            intervalUpdate()
-        }, [])
-
-        const intervalUpdate=()=>{
-            updateLocalizedTemperature()
-            setInterval(()=>intervalUpdate(), 300*1000)
-        }
-
-
-        return (
-            <>
-                <span className={'topText'}>[{name}:&nbsp;{temp}&nbsp;&deg;C - {updateTime}]</span>
-            </>
-        )
-    }
     return (
         <>
             <div className={'topBar-item'} title={'double click to copy'}
@@ -172,16 +132,11 @@ export const MyLocation = () => {
             </div>
             <div className={'topBar-item'} title={'double click to copy'}
                  onDoubleClick={() => ClipboardUtils.copy(temp)}>
+
+                <span className={'topText'}><b>{location}</b></span>&nbsp;
                 <span className={'topText'}>Temp: <b>{temp}</b>&nbsp;&deg;C</span>&nbsp;
                 <span className={'topText'}>Humidity: <b>{humidity}</b> %</span>&nbsp;
                 <span className={'topText'}>Weather: <b>{weather}</b></span>
-            </div>
-            <div className={'float-right topBar-item'}>
-                {
-                    temps.map((value, index) => {
-                        return <Temperature key={index} lan={value.lan} long={value.long}/>
-                    })
-                }
             </div>
         </>
     )

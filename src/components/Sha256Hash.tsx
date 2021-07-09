@@ -24,8 +24,6 @@ const Sha256Hash = () => {
         }
     }
 
-    let componentName = "Sha256 Hasher"
-
     const dropFile = (ev: ReactDragEvent) => {
         ev.preventDefault()
         const file = DragDropUtils.extractFileFromDragEvent(ev)
