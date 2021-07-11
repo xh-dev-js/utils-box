@@ -51,12 +51,6 @@ function App() {
         <>
             <NavBarModule.TopNavBar content={topContent()}/>
             <div className="App container " style={{paddingTop: '50px'}}>
-                <BootstrapCardModule.BootstrapCard componentName={"Miscellaneous Symbols Table"} component={CodeTable({start: 9728, end: 9983})}/>
-                <BootstrapCardModule.BootstrapCard componentName={"Arrows Table"} component={CodeTable({start: 8592, end: 8703})}/>
-                <BootstrapCardModule.BootstrapCard componentName={"Currency Table"} component={CodeTable({start: 8352, end: 8399})}/>
-                <BootstrapCardModule.BootstrapCard componentName={"Greek Code Table"} component={CodeTable({start: 880, end: 1023})}/>
-                <BootstrapCardModule.BootstrapCard componentName={"Math Code Table"} component={CodeTable({start: 8704, end: 8959})}/>
-                <BootstrapCardModule.BootstrapCard componentName={"Ascii Code Table"} component={CodeTable({start: 0, end: 256})}/>
                 <BootstrapCardModule.BootstrapCard componentName={"IP to country"} component={GeoIp()}/>
                 <BootstrapCardModule.BootstrapCard componentName={"Base64 Decoder"} component={Base64Decoder()}/>
                 <BootstrapCardModule.BootstrapCard componentName={"Base64 Encode"} component={Base64Encoder()}/>
@@ -66,8 +60,13 @@ function App() {
                 <BootstrapCardModule.BootstrapCard componentName={"URL Processor"} component={UrlProcessor()}/>
                 <BootstrapCardModule.BootstrapCard componentName={"URL Encoder"} component={UrlEncoder()}/>
                 <BootstrapCardModule.BootstrapCard componentName={"URL Decoder"} component={UrlDecoder()}/>
-                <BootstrapCardModule.BootstrapCard componentName={"Number Representations"}
-                                                   component={NumberRepresentations()}/>
+                <BootstrapCardModule.BootstrapCard componentName={"Number Representations"} component={NumberRepresentations()}/>
+                <BootstrapCardModule.BootstrapCard componentName={"Miscellaneous Symbols Table"} component={CodeTable({start: 9728, end: 9983})}/>
+                <BootstrapCardModule.BootstrapCard componentName={"Arrows Table"} component={CodeTable({start: 8592, end: 8703})}/>
+                <BootstrapCardModule.BootstrapCard componentName={"Currency Table"} component={CodeTable({start: 8352, end: 8399})}/>
+                <BootstrapCardModule.BootstrapCard componentName={"Greek Code Table"} component={CodeTable({start: 880, end: 1023})}/>
+                <BootstrapCardModule.BootstrapCard componentName={"Math Code Table"} component={CodeTable({start: 8704, end: 8959})}/>
+                <BootstrapCardModule.BootstrapCard componentName={"Ascii Code Table"} component={CodeTable({start: 0, end: 256})}/>
             </div>
         </>
     );

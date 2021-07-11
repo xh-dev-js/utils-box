@@ -15,7 +15,9 @@ export module CheckBoxModule{
         const pair = new BootstrapHelper.IdNamePair(props.generalName+"_"+props.checkedIf.toString())
         return (
             <>
-                <div className={'form-check'+(props.custClassName?" "+props.custClassName:'')}>
+                <div className={'form-check hoverable '+(props.custClassName?" "+props.custClassName:'')}
+                     onClick={()=>props.setChecked(props.checkedIf)}
+                >
                     <input className="form-check-input" type="radio"
                            name={pair.name()}
                            id={pair.id()}
