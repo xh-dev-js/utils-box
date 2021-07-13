@@ -4,7 +4,9 @@ import {ClipboardUtils} from "pyyqww_t1/dist";
 
 export module InputRowModule {
     type InputRowProps = {
+        extraClassName: string;
         title: string;
+        boldTitle: boolean;
         generalName?: string;
         value: string | number | boolean;
         isReadOnly: boolean;
@@ -18,11 +20,16 @@ export module InputRowModule {
         )
         return (
             <>
-                <div className="mb-3 row"
+                <div className={"mb-3 row " + props.extraClassName}
                      onDoubleClick={() => ClipboardUtils.copy(String(props.value))}
                      title={'Double click to copy'}
                 >
-                    <label htmlFor={pair.id()} className="col-sm-2 col-form-label">{props.title}</label>
+                    <label htmlFor={pair.id()} className="col-sm-2 col-form-label">
+                        {
+                            props.boldTitle? <b>{props.title}</b>: props.title
+                            // props.boldTitle ? "ab" : "cd"
+                        }
+                    </label>
                     <div className="col-sm-10">
                         <input type="text" readOnly={props.isReadOnly} className="form-control-plaintext" id={pair.id()}
                                disabled={props.isDisabled}
@@ -35,8 +42,10 @@ export module InputRowModule {
     }
 
     InputRow.defaultProps = {
+        extraClassName: '',
         isReadOnly: true,
         isDisabled: true,
         doubleClickToCopy: true,
+        boldTitle: true
     }
 }

@@ -18,9 +18,9 @@ export const GeoIp = () => {
     const query = async (text: string) => {
         if (text) {
             try {
-                // const host = "http://localhost:8080"
+                const host = "http://localhost:8080"
                 // const host = "http://10.10.0.7:8080"
-                const host = "https://w.dextro.link/geoip"
+                // const host = "https://w.dextro.link/geoip"
                 let url: string = ""
                 switch (checked) {
                     case CheckedState.asn:
