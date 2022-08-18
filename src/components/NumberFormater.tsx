@@ -6,7 +6,10 @@ import {CheckBoxModule} from "../bootstrap/CheckBox";
 const {useState} = React
 
 export const NumberRepresentations = () => {
-    const [inputValue, setInputValue] = useState('')
+    enum CheckedState {
+        binary, dec, oct, hex
+    }
+    const [inputValue] = useState('')
     const [resultBinaryValue, setResultBinaryValue] = useState('')
     const [resultDecValue, setResultDecValue] = useState('')
     const [resultOctValue, setResultOctValue] = useState('')
@@ -47,9 +50,6 @@ export const NumberRepresentations = () => {
         }
     }
 
-    enum CheckedState {
-        binary, dec, oct, hex
-    }
 
     const [checked, setChecked] = useState(CheckedState.dec)
 

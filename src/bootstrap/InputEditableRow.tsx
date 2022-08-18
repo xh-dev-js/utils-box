@@ -2,19 +2,18 @@ import React from "react";
 import {BootstrapHelper} from "./BootstrapHelper";
 import {ClipboardUtils} from "pyyqww_t1/dist";
 
-export module InputRowModule {
-    type InputRowProps = {
+export module InputEditableRowModule {
+    type InputEditableRowProps = {
         extraClassName: string;
         title: string;
         boldTitle: boolean;
         generalName?: string;
         value: string | number | boolean;
-        isReadOnly: boolean;
-        isDisabled: boolean;
         doubleClickToCopy: boolean;
+        setValue: (s: string)=>void;
     }
     // export const CheckBox = (generalName: string, checked: boolean, setChecked: (checked: boolean)=>void) => {
-    export const InputRow = (props: InputRowProps) => {
+    export const InputEditableRow = (props: InputEditableRowProps) => {
         const pair = new BootstrapHelper.IdNamePair(
             props.generalName === undefined ? `generated_${props.title.replace(' ', '_')}` : props.generalName
         )
@@ -27,13 +26,12 @@ export module InputRowModule {
                     <label htmlFor={pair.id()} className="col-xs-5 col-sm-2 col-form-label">
                         {
                             props.boldTitle? <b>{props.title}</b>: props.title
-                            // props.boldTitle ? "ab" : "cd"
                         }
                     </label>
                     <div className="col-xs-7 col-sm-10">
-                        <input type="text" readOnly={props.isReadOnly} className="form-control-plaintext" id={pair.id()}
-                               disabled={props.isDisabled}
+                        <input type="text" className="form-control-plaintext" id={pair.id()}
                                value={String(props.value)}
+                               onChange={e=>props.setValue(e.target.value)}
                         />
                     </div>
                 </div>
@@ -41,10 +39,8 @@ export module InputRowModule {
         )
     }
 
-    InputRow.defaultProps = {
+    InputEditableRow.defaultProps = {
         extraClassName: '',
-        isReadOnly: true,
-        isDisabled: true,
         doubleClickToCopy: true,
         boldTitle: true,
     }

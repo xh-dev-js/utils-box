@@ -78,6 +78,10 @@ textarea {
     position: fixed;
     margin-top: 50px;
   }
+
+  .TimeTagSmall {
+    display: none;
+  }
 }
 @media (max-width: 1100px) {
   .container {
@@ -87,6 +91,10 @@ textarea {
   .SideBar {
     position: fixed;
     margin-top: 95px;
+  }
+
+  .TimeTagSmall {
+    display: block;
   }
 }
 

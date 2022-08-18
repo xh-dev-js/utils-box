@@ -15,7 +15,6 @@ const MyIp = () => {
             setIp(fetchedIp)
         })
             .catch(e=>{
-                console.log(e)
                 setIp("fail to detect ip")
             })
         ;

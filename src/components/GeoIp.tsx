@@ -43,6 +43,7 @@ export const GeoIp = () => {
     }
     useEffect(()=>{
         query(inputValue)
+            .then(()=>{})
     },[inputValue,checked])
 
     return (
@@ -58,7 +59,7 @@ export const GeoIp = () => {
                                      setChecked={(value) => setChecked(value)}/>
             <TextAreaModule.TextArea value={inputValue} updateCallback={setInputValue}
                                      doubleClickToPaste={true}/>
-            <TextAreaModule.TextArea value={resultValue} doubleClickToCopy={true}/>
+            <TextAreaModule.TextArea value={resultValue} doubleClickToCopy={true} updateCallback={_=>{}}/>
         </>
     )
 }

@@ -11,6 +11,7 @@ export module TextAreaModule {
         doubleClickToCopy: boolean;
         droppable: boolean;
         rows: number;
+        placeholder: string;
     }
     export const TextArea = (props: TextAreaProps) => {
         const [tempValue, setTempValue] = useState('')
@@ -80,6 +81,7 @@ export module TextAreaModule {
 
                     rows={props.rows}
                     title={title}
+                    placeholder={props.placeholder}
                 />
             </>
         )
@@ -94,6 +96,6 @@ export module TextAreaModule {
         },
         droppable: false,
         rows: 1,
-        updateCallback: (text:string)=>{}
+        placeholder: ""
     }
 }

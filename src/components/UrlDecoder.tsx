@@ -9,6 +9,7 @@ const UrlEncoder = () => {
     enum CheckedState {
         encodeUri, encodeUriComponent
     }
+
     const [useDecodeUri, setUseDecodeUri] = useState(CheckedState.encodeUri)
     const [inputValue, setInputValue] = useState('')
     const [decodedValue, setDecodedValue] = useState('')
